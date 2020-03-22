@@ -1,0 +1,1 @@
+export const baseUrl = "http://44.231.178.91:8080/eyedentifyme"
