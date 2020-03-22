@@ -1,31 +1,28 @@
 import * as React from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 // import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
 import {
   Login,
   Registration,
   Home,
-  Splash,
-  Chat,
   Jobs,
   Notifications,
-  Settings
+  Chat,
+  Settings,
 } from '../screen';
-import { Ionicons } from 'react-native-vector-icons/Ionicons';
-
+import {useSelector} from 'react-redux';
 export const AuthContext = React.createContext();
-
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => (
-  <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+  <AuthStack.Navigator screenOptions={{headerShown: false}}>
     <AuthStack.Screen name="Login" component={Login} />
     <AuthStack.Screen
       name="Registration"
       component={Registration}
-      options={{ title: 'Registration' }}
+      options={{title: 'Registration'}}
     />
   </AuthStack.Navigator>
 );
@@ -39,7 +36,7 @@ const HomeStackScreen = () => (
     <HomeStack.Screen
       name="Home"
       component={Home}
-      options={{ headerShown: false }}
+      options={{headerShown: false}}
     />
     {/* <HomeStack.Screen
             name="Details"
@@ -96,14 +93,14 @@ const TabBar = () => (
 );
 
 const RootStack = createStackNavigator();
-const RootStackScreen = ({ userToken }) => (
+const RootStackScreen = ({userToken}) => (
   <RootStack.Navigator headerMode="none">
     {userToken ? (
       <RootStack.Screen
         name="App"
         component={TabBar}
         options={{
-          animationEnabled: false
+          animationEnabled: false,
         }}
       />
     ) : (
@@ -111,7 +108,7 @@ const RootStackScreen = ({ userToken }) => (
         name="Auth"
         component={AuthStackScreen}
         options={{
-          animationEnabled: false
+          animationEnabled: false,
         }}
       />
     )}
@@ -119,72 +116,22 @@ const RootStackScreen = ({ userToken }) => (
 );
 
 export function Navigation() {
-  const [state, dispatch] = React.useReducer(
-    (prevState, action) => {
-      switch (action.type) {
-        case 'RESTORE_TOKEN':
-          return {
-            ...prevState,
-            userToken: action.token,
-            isLoading: false
-          };
-        case 'SIGN_IN':
-          return {
-            ...prevState,
-            isSignout: false,
-            userToken: action.token
-          };
-        case 'SIGN_OUT':
-          return {
-            ...prevState,
-            isSignout: true,
-            userToken: null
-          };
-      }
-    },
-    {
-      isLoading: true,
-      isSignout: false,
-      userToken: null
-    }
-  );
+  // const [state, dispatch] = React.useState({userToken: null});
+  const token = useSelector(state => {
+    return state.AuthReducer.token;
+  });
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
-      let userToken;
-
-      try {
-        userToken = await AsyncStorage.getItem('userToken');
-      } catch (e) {}
-      dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+      console.log('************************************', token);
     };
 
     bootstrapAsync();
   }, []);
 
-  const authContext = React.useMemo(
-    () => ({
-      signIn: async data => {
-        await AsyncStorage.setItem('userToken', 'text');
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-      },
-      signOut: async () => {
-        await AsyncStorage.clear();
-        dispatch({ type: 'SIGN_OUT' });
-      },
-      signUp: async data => {
-        await AsyncStorage.setItem('userToken', 'text');
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-      }
-    }),
-    []
-  );
-
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <RootStackScreen userToken={state.userToken} />
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <NavigationContainer>
+      <RootStackScreen userToken={token} />
+    </NavigationContainer>
   );
 }

@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { Colors, Fonts } from '../../theme';
+import {StyleSheet} from 'react-native';
+import {Colors, Fonts} from '../../theme';
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 export const styles = StyleSheet.create({
   button: {
@@ -15,10 +15,10 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.75,
     shadowRadius: 5,
     elevation: 5,
-    shadowColor: 'red',
-    shadowOffset: { height: 0, width: 0 }
+    shadowColor: '#ccc',
+    shadowOffset: {height: 0, width: 0},
   },
   buttonText: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 });

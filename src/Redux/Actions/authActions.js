@@ -1,14 +1,28 @@
-import {LOGIN, REGISTER} from '../actionTypes';
+import {
+  PROFILEDATA,
+  REGISTER,
+  ERROR,
+  FORGET_PASSWORD,
+  RESET_PASSWORD,
+  USERDATA,
+  SETTOKEN,
+} from '../ActionType';
 
-export function ProfileData(payload) {
+export function ProfileDataAction(payload) {
   return {
-    type: USERDATA,
+    type: PROFILEDATA,
     payload,
   };
 }
-export function LoginAction(payload) {
+export function TokenAction(payload) {
   return {
-    type: LOGIN,
+    type: SETTOKEN,
+    payload,
+  };
+}
+export function userDataAction(payload) {
+  return {
+    type: USERDATA,
     payload,
   };
 }
