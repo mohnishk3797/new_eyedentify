@@ -6,12 +6,17 @@ import {
 } from 'react-native-responsive-screen';
 export const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: Colors.primaryColor,
     height: '70%',
     width: wp('40%'),
     borderRadius: wp('40%'),
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    shadowOpacity: 0.75,
+    shadowRadius: 5,
+    elevation: 5,
+    shadowColor: 'red',
+    shadowOffset: { height: 0, width: 0 }
   },
   buttonText: {
     color: '#fff'

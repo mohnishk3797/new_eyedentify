@@ -12,8 +12,8 @@ export function InputWithIcon(props) {
       <Image
         resizeMode="contain"
         style={{
-          height: wp('7%'),
-          width: wp('7%'),
+          height: wp('4%'),
+          width: wp('4%'),
           marginRight: 15
         }}
         source={Images[props.iconName]}

@@ -33,8 +33,8 @@ export const styles = StyleSheet.create({
   },
   logoImg: {
     height: 100,
-    width: 100,
-    backgroundColor: 'limegreen'
+    width: 100
+    // backgroundColor: 'limegreen'
   },
   dynamicElementsContainer: {
     flex: 0.75,

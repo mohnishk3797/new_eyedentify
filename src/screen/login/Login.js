@@ -13,15 +13,14 @@ import { AuthContext } from '../../navigation/index';
 
 import { LoginCard } from '../../containers';
 
-import {loginService} from '../../service/authentication';
+import { loginService } from '../../service/authentication';
 
 export function Login({ navigation }) {
   const { signIn } = useContext(AuthContext);
   const [state, setState] = React.useState({
-    email: "",
-    password: ""
-  })
-
+    email: '',
+    password: ''
+  });
 
   const data = {
     email: state.email,
@@ -35,7 +34,7 @@ export function Login({ navigation }) {
       username: state.email,
       password: state.password
     };
-    const obj = await loginService(data)
+    const obj = await loginService(data);
     // console.log("login 1 ", obj)
   };
 
@@ -44,8 +43,8 @@ export function Login({ navigation }) {
       ...state,
       [name]: event
     });
-  }
-  
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView
@@ -54,24 +53,26 @@ export function Login({ navigation }) {
       >
         <LinearGradient colors={Colors.gradient} style={styles.container}>
           <View style={styles.mainContainer}>
-
-            <LoginCard 
-              data={data} 
-              onSignIn={onSignIn} 
-              onChange={changehandler} 
+            <LoginCard
+              data={data}
+              onSignIn={onSignIn}
+              onChange={changehandler}
             />
 
             <View style={styles.fixedCircle} />
           </View>
           <View style={styles.footer}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text>Don't have account? </Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Registration')}
-              >
-                <Text>SIGN UP</Text>
-              </TouchableOpacity>
-            </View>
+            {/* <View style={{ flexDirection: 'row' }}> */}
+            <TouchableOpacity
+              style={{ flexDirection: 'row' }}
+              onPress={() => navigation.navigate('Registration')}
+            >
+              <Text style={styles.footerText}>Don't have account? </Text>
+              <Text style={[styles.footerText, { fontWeight: 'bold' }]}>
+                SIGN UP
+              </Text>
+            </TouchableOpacity>
+            {/* </View> */}
           </View>
         </LinearGradient>
       </ScrollView>

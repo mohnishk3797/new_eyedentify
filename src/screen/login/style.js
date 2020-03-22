@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
   fixedCircle: {
     borderWidth: 1,
     borderColor: '#dedede',
+    backgroundColor: Colors.darkPrimary,
     height: wp('10%'),
     width: wp('10%'),
     borderRadius: wp('10%'),
@@ -30,5 +31,8 @@ export const styles = StyleSheet.create({
     flex: 0.1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  footerText: {
+    color: Colors.primaryColor
   }
 });

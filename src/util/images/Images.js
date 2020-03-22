@@ -1,5 +1,5 @@
 export const Images = {
-  BrandLogo: require('../../assets/images/demo_logo2.png'),
+  BrandLogo: require('../../assets/images/eydentifyLogo.png'),
   Facebook: require('../../assets/images/facebook.png'),
   FacebookBlue: require('../../assets/images/blue_facebook.png'),
   Google: require('../../assets/images/google.png'),
