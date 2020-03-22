@@ -4,7 +4,18 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Login, Registration, Home, Intro, Splash } from '../screen';
+import {
+  Login,
+  Registration,
+  Home,
+  Splash,
+  Chat,
+  Jobs,
+  Notifications,
+  Settings
+} from '../screen';
+import { Ionicons } from 'react-native-vector-icons/Ionicons';
+
 export const AuthContext = React.createContext();
 
 const AuthStack = createStackNavigator();
@@ -52,9 +63,34 @@ const Tab = createBottomTabNavigator();
 
 const TabBar = () => (
   // <NavigationContainer>
-  <Tab.Navigator>
+  <Tab.Navigator
+  //   screenOptions={({ route }) => ({
+  //     tabBarIcon: ({ focused, color, size }) => {
+  //       let iconName;
+
+  //       if (route.name === 'Home') {
+  //         iconName = focused
+  //           ? 'ios-information-circle'
+  //           : 'ios-information-circle-outline';
+  //       } else if (route.name === 'Settings') {
+  //         iconName = focused ? 'ios-list-box' : 'ios-list';
+  //       }
+
+  //       // You can return any component that you like here!
+  //       return <Ionicons name={iconName} size={size} color={color} />;
+  //     }
+  //   })
+  // }
+  //   tabBarOptions={{
+  //     activeTintColor: 'tomato',
+  //     inactiveTintColor: 'gray'
+  //   }}
+  >
     <Tab.Screen name="Home" component={HomeStackScreen} />
-    <Tab.Screen name="Intro" component={Intro} />
+    <Tab.Screen name="Jobs" component={Jobs} />
+    <Tab.Screen name="Notifications" component={Notifications} />
+    <Tab.Screen name="Chat" component={Chat} />
+    <Tab.Screen name="Settings" component={Settings} />
   </Tab.Navigator>
   // </NavigationContainer>
 );
