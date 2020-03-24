@@ -27,6 +27,7 @@ export function LoginCard(props) {
               <View style={styles.inputContainer}>
                 <InputWithIcon
                   name="email"
+                  placeholder="Email"
                   value={props.data.email}
                   iconName="mail"
                   onChange={props.onChange}
@@ -34,6 +35,7 @@ export function LoginCard(props) {
 
                 <InputWithIcon
                   name="password"
+                  placeholder="Password"
                   value={props.data.password}
                   iconName="lock"
                   onChange={props.onChange}

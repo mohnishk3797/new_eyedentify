@@ -16,7 +16,7 @@ import {
 import { Colors } from '../../theme';
 import { UploadContainer } from '../../containers';
 import { Images } from '../../util';
-import { Header, InputWithIcon, TwoInputsWithIcon } from '../../components';
+import { Header, InputWithIcon, RoundButton, TwoInputsWithIcon } from '../../components';
 const { height } = Dimensions.get('window');
 import { Keboardavoing } from '../../containers';
 
@@ -27,8 +27,18 @@ export function Registration({ navigation }) {
     email: '',
     contactNumber: '',
     password: '',
-    repeatPassword: ''
+    repeatPassword: '',
+    businessName: ''
   });
+  const data = {
+    name: state.name,
+    surnam: state.surname,
+    email: state.email,
+    contactNumber: state.contactNumber,
+    password: state.password,
+    repeatPassword: state.repeatPassword
+
+  };
 
   const changehandler = (event, name) => {
     console.log('event: ', event, 'name: ', name);
@@ -84,12 +94,21 @@ export function Registration({ navigation }) {
             />
             <InputWithIcon
               name="email"
+              placeholder="Email"
+              value={state.email}
+              iconName="mail"
+              onChange={changehandler}
+            />
+            <InputWithIcon
+              name="businessName"
+              placeholder="Business Name"
               value={state.email}
               iconName="mail"
               onChange={changehandler}
             />
             <InputWithIcon
               name="contactNumber"
+              placeholder="Contact Number"
               value={state.contactNumber}
               iconName="mobile"
               onChange={changehandler}
@@ -97,12 +116,14 @@ export function Registration({ navigation }) {
             />
             <InputWithIcon
               name="vehicleRegistrationNumber"
+              placeholder="Vehicle Registration Number"
               value={state.vehicleRegistrationNumber}
               iconName="document"
               onChange={changehandler}
             />
             <InputWithIcon
               name="password"
+              placeholder="Password"
               value={state.password}
               iconName="lock"
               isSecure
@@ -110,6 +131,7 @@ export function Registration({ navigation }) {
             />
             <InputWithIcon
               name="repeatPassword"
+              placeholder="Repeat Password"
               value={state.repeatPassword}
               iconName="lock"
               isSecure
@@ -209,6 +231,11 @@ export function Registration({ navigation }) {
                 Most recent job carried out
               </Text>
             </View>
+          </View>
+          <View style={styles.loginBottonContainer}>
+            <RoundButton title="Sign Up" onPress={() => {
+              console.log('etst')
+            }} />
           </View>
         </View>
       </Keboardavoing>

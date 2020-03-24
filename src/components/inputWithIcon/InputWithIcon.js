@@ -20,7 +20,7 @@ export function InputWithIcon(props) {
       />
       <TextInput
         style={styles.input}
-        placeholder={props.name}
+        placeholder={props.placeholder}
         value={props.value}
         onChangeText={text => props.onChange(text, props.name)}
         secureTextEntry={props.isSecure}
