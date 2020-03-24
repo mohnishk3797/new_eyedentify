@@ -37,6 +37,7 @@ export function LoginCard(props) {
                   value={props.data.password}
                   iconName="lock"
                   onChange={props.onChange}
+                  isSecure
                 />
               </View>
               <View style={styles.rememberMeContainer}>

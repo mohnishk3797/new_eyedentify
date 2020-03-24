@@ -1,15 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Colors, Fonts } from '../../theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
+
+const { height } = Dimensions.get('window');
 export const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   scrollContainer: {
     flexGrow: 1
+  },
+  gradient: {
+    height
   },
   mainContainer: {
     flex: 0.9,

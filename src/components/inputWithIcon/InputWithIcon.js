@@ -12,8 +12,8 @@ export function InputWithIcon(props) {
       <Image
         resizeMode="contain"
         style={{
-          height: wp('4%'),
-          width: wp('4%'),
+          height: wp('5%'),
+          width: wp('5%'),
           marginRight: 15
         }}
         source={Images[props.iconName]}
@@ -23,14 +23,9 @@ export function InputWithIcon(props) {
         placeholder={props.name}
         value={props.value}
         onChangeText={text => props.onChange(text, props.name)}
+        secureTextEntry={props.isSecure}
+        keyboardType={props.numeric && 'numeric'}
       />
     </View>
-    // <TextInput
-    //     style={styles.input}
-    //     placeholder={props.placeholder}
-    //     secureTextEntry={props.isSecure}
-    //     value={props.value}
-    //     onChangeText={(text) => props.updateValue(props.placeholder, text)}
-    // />
   );
 }

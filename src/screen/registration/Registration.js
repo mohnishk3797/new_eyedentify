@@ -1,89 +1,51 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
   Dimensions,
-  StyleSheet,
-  TextInput,
+  StyleSheet
 } from 'react-native';
-// import { styles } from './style';
-import {Colors} from '../../theme';
-import {SignUpCard, SocialButtonContainer} from '../../containers';
-import {AuthContext} from '../../navigation/index';
-import {Images} from '../../util';
-import {Header} from '../../components';
-import Icon from 'react-native-vector-icons/Feather';
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
+  heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
-export function Registration({navigation}) {
-  // const { signUp } = useContext(AuthContext);
-  const [name, setname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phoneNumber, setphoneNumber] = useState('');
 
-  const {height} = Dimensions.get('window');
-  const payload = {
-    name,
-    email,
-    password,
-    phoneNumber,
-  };
-  const doSignUp = () => {
-    console.log(
-      'Sign in successfull',
-      'name: ',
-      name,
-      'email: ',
-      email,
-      'password: ',
-      password,
-      'phoneNumber: ',
-      phoneNumber,
-    );
-    signUp();
+// import { styles } from './style';
+import { Colors } from '../../theme';
+import { UploadContainer } from '../../containers';
+import { Images } from '../../util';
+import { Header, InputWithIcon, TwoInputsWithIcon } from '../../components';
+const { height } = Dimensions.get('window');
+import { Keboardavoing } from '../../containers';
+
+export function Registration({ navigation }) {
+  const [state, setState] = React.useState({
+    name: '',
+    surname: '',
+    email: '',
+    contactNumber: '',
+    password: '',
+    repeatPassword: ''
+  });
+
+  const changehandler = (event, name) => {
+    console.log('event: ', event, 'name: ', name);
+    setState({
+      ...state,
+      [name]: event
+    });
   };
 
-  const updateValue = (name, value) => {
-    switch (name) {
-      case 'Name':
-        {
-          setname(value);
-        }
-        break;
-      case 'Email':
-        {
-          setEmail(value);
-        }
-        break;
-      case 'Password':
-        {
-          setPassword(value);
-        }
-        break;
-      case 'Phone Number':
-        {
-          setphoneNumber(value);
-        }
-        break;
-      default: {
-        console.log('Try again');
-        return;
-      }
-    }
+  const onUpload = () => {
+    console.log('upload press');
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <ScrollView style={{flexGrow: 1}} contentContainerStyle={{flexGrow: 1}}>
-        <Header title="SIGN UP" navigation={navigation} isBack />
+    <>
+      <Header title="SIGN UP" navigation={navigation} isBack />
+      <Keboardavoing>
         <View style={styles.cardContainer}>
           <View style={styles.profileImageContainer}>
             <Image
@@ -93,7 +55,7 @@ export function Registration({navigation}) {
             />
             <TouchableOpacity
               style={{
-                backgroundColor: 'blue',
+                backgroundColor: Colors.primaryColor,
                 height: wp('10%'),
                 width: wp('10%'),
                 borderRadius: wp('5%'),
@@ -101,151 +63,208 @@ export function Registration({navigation}) {
                 top: '12%',
                 right: '35%',
                 justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+                alignItems: 'center'
+              }}
+            >
               <Image
                 resizeMode="contain"
-                style={{height: wp('6%'), width: wp('6%')}}
+                style={{ height: wp('3.5%'), width: wp('3.5%') }}
                 source={Images.whitePlus}
               />
             </TouchableOpacity>
           </View>
-          <View style={{flex: 0.9, padding: 5}}>
-            <View style={styles.inputWithIcon}>
-              <Image
-                resizeMode="contain"
-                style={{height: wp('7%'), width: wp('7%'), marginRight: 15}}
-                source={Images.user}
-              />
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                <TextInput
-                  style={[styles.input, {flex: 0.45}]}
-                  placeholder="Name"
-                />
-                <TextInput
-                  style={[styles.input, {flex: 0.45}]}
-                  placeholder="Surname"
-                  // secureTextEntry
-                />
-              </View>
+          <View style={{ padding: 15 }}>
+            <TwoInputsWithIcon
+              data={[
+                { name: 'name', value: state.name },
+                { name: 'surname', value: state.surnam }
+              ]}
+              onChange={changehandler}
+              iconName="user"
+            />
+            <InputWithIcon
+              name="email"
+              value={state.email}
+              iconName="mail"
+              onChange={changehandler}
+            />
+            <InputWithIcon
+              name="contactNumber"
+              value={state.contactNumber}
+              iconName="mobile"
+              onChange={changehandler}
+              numeric
+            />
+            <InputWithIcon
+              name="vehicleRegistrationNumber"
+              value={state.vehicleRegistrationNumber}
+              iconName="document"
+              onChange={changehandler}
+            />
+            <InputWithIcon
+              name="password"
+              value={state.password}
+              iconName="lock"
+              isSecure
+              onChange={changehandler}
+            />
+            <InputWithIcon
+              name="repeatPassword"
+              value={state.repeatPassword}
+              iconName="lock"
+              isSecure
+              onChange={changehandler}
+            />
+            <UploadContainer
+              heading="Copy of id of business owner and field staff"
+              text="Upload ID document"
+              format="JPG or PNG"
+              onPress={onUpload}
+            />
+
+            <UploadContainer
+              heading="Copy of id of business owner and field staff"
+              text="Upload ID document"
+              format="JPG or PNG"
+              onPress={onUpload}
+            />
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 15, color: 'gray' }}>
+                CC documents, pty(ltd), SARS tax clearance certificate and
+                latest annual financial statement
+              </Text>
             </View>
-            <View style={styles.inputWithIcon}>
-              <Image
-                resizeMode="contain"
-                style={{height: wp('7%'), width: wp('7%'), marginRight: 15}}
-                source={Images.mail}
-              />
-              <TextInput
-                style={[styles.input, {flex: 1}]}
-                placeholder="email"
-              />
+            <View style={{ marginVertical: 15 }}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+                Sole proprietor require id document
+              </Text>
             </View>
-            <View style={styles.inputWithIcon}>
-              <Image
-                resizeMode="contain"
-                style={{height: wp('7%'), width: wp('7%'), marginRight: 15}}
-                source={Images.mobile}
-              />
-              <TextInput
-                style={[styles.input, {flex: 1}]}
-                placeholder="Contact Number"
-              />
+            <UploadContainer
+              heading="Text Clearance Documents"
+              text="Upload document"
+              format="JPG or PNG"
+              onPress={onUpload}
+            />
+            <UploadContainer
+              heading="Latest annual financial statement"
+              text="Upload document"
+              format="JPG or PNG"
+              onPress={onUpload}
+            />
+
+            <UploadContainer
+              heading="Banking letter"
+              text="Upload document"
+              format="JPG or PNG"
+              onPress={onUpload}
+            />
+            <View style={{ marginBottom: 15 }}>
+              <Text style={{ fontSize: 15, color: 'gray' }}>
+                Confirming details and that bank account is active
+              </Text>
             </View>
-            <View style={styles.inputWithIcon}>
-              <Image
-                resizeMode="contain"
-                style={{height: wp('7%'), width: wp('7%'), marginRight: 15}}
-                source={Images.document}
-              />
-              <TextInput
-                style={[styles.input, {flex: 1}]}
-                placeholder="Vehicle Registration Number"
-              />
+          </View>
+
+          <View
+            style={{
+              marginHorizontal: 15,
+              borderWidth: 1,
+              borderColor: '#dedede',
+              marginBottom: 20
+            }}
+          ></View>
+
+          <View style={{ padding: 15 }}>
+            <View style={styles.referralsHeader}>
+              <Text style={styles.referralsHeaderText}>Referrals</Text>
             </View>
-            <View style={styles.inputWithIcon}>
-              <Image
-                resizeMode="contain"
-                style={{height: wp('7%'), width: wp('7%'), marginRight: 15}}
-                source={Images.lock}
-              />
-              <TextInput
-                style={[styles.input, {flex: 1}]}
-                placeholder="Password"
-                secureTextEntry
-              />
-            </View>
-            <View style={styles.inputWithIcon}>
-              <Image
-                resizeMode="contain"
-                style={{height: wp('7%'), width: wp('7%'), marginRight: 15}}
-                source={Images.lock}
-              />
-              <TextInput
-                style={[styles.input, {flex: 1}]}
-                placeholder="Repeat Password"
-                secureTextEntry
-              />
+            <TwoInputsWithIcon
+              data={[
+                { name: 'name', value: state.name },
+                { name: 'surname', value: state.surnam }
+              ]}
+              onChange={changehandler}
+              iconName="user"
+            />
+            <InputWithIcon
+              name="email"
+              value={state.email}
+              iconName="mail"
+              onChange={changehandler}
+            />
+          </View>
+
+          <View
+            style={{
+              marginHorizontal: 15,
+              borderWidth: 1,
+              borderColor: '#dedede',
+              marginBottom: 20
+            }}
+          ></View>
+
+          <View style={{ padding: 15 }}>
+            <View style={styles.referralsHeader}>
+              <Text style={styles.referralsHeaderText}>
+                Most recent job carried out
+              </Text>
             </View>
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </Keboardavoing>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   scrollContainer: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   headerContainer: {
     flex: 0.1,
     backgroundColor: '#fff',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   headerLeft: {
     flex: 0.15,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   headerMain: {
     flex: 0.7,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   headerRight: {
     flex: 0.15,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   cardContainer: {
     flex: 0.9,
     marginTop: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   profileImageContainer: {
-    flex: 0.1,
-    // backgroundColor: 'red',
+    height: height * 0.2,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   profileImg: {
     height: wp('30%'),
     width: wp('30%'),
-    borderRadius: wp('50%'),
+    borderRadius: wp('30%')
   },
   inputWithIcon: {
-    // flex: 0.5,
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   input: {
     height: 40,
     borderBottomWidth: 1,
-    borderBottomColor: '#dedede',
-    // width: '45%'
-  },
+    borderBottomColor: '#dedede'
+  }
 });

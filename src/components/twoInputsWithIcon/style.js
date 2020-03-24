@@ -11,6 +11,6 @@ export const styles = StyleSheet.create({
     height: 40,
     borderBottomWidth: 1,
     borderBottomColor: '#dedede',
-    width: '90%'
+    width: '48%'
   }
 });

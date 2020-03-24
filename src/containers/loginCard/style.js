@@ -27,17 +27,16 @@ export const styles = StyleSheet.create({
     flex: 1
   },
   logContainer: {
-    flex: 0.25,
-    justifyContent: 'center',
+    flex: 0.2,
+    justifyContent: 'flex-end',
     alignItems: 'center'
   },
   logoImg: {
-    height: 100,
-    width: 100
-    // backgroundColor: 'limegreen'
+    height: wp('40%'),
+    width: wp('40%')
   },
   dynamicElementsContainer: {
-    flex: 0.75,
+    flex: 0.8,
     flexDirection: 'row'
   },
   point15Flex: {
