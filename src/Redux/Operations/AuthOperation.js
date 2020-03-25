@@ -24,3 +24,28 @@ export const loginService = data => {
       });
   });
 };
+
+export const signupService = data => {
+  return new Promise(function(resolve, reject) {
+    axios({
+      method: 'post',
+      url: `${baseUrl}/serviceProvider/signUpBusiness`,
+      headers: {
+        Authorization: `Basic ${token}`,
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    })
+      .then(res => {
+        if (res.status === 200) {
+          resolve(res.data);
+        } else {
+          reject(res);
+        }
+      })
+      .catch(err => {
+        reject(err.response);
+      });
+  });
+};
+

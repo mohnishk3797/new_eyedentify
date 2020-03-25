@@ -1,2 +1,2 @@
-import {loginService} from './AuthOperation';
-export {loginService};
+import {loginService, signupService} from './AuthOperation';
+export {loginService, signupService};

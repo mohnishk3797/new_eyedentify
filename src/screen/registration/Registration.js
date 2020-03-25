@@ -5,12 +5,21 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  CheckBox
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
+import ImagePicker from 'react-native-image-picker';
+import { signupService } from '../../Redux/Operations';
+import {
+  ErrorAction,
+  ProfileDataAction,
+  RegisterAction,
+  TokenAction
+} from '../../Redux/Actions';
 
 // import { styles } from './style';
 import { Colors } from '../../theme';
@@ -22,35 +31,101 @@ import { Keboardavoing } from '../../containers';
 
 export function Registration({ navigation }) {
   const [state, setState] = React.useState({
-    name: '',
-    surname: '',
-    email: '',
-    contactNumber: '',
-    password: '',
+    businessName: '',
+    businessSurname: '',
+    businessEmail: '',
+    businessContactNumber: '',
+    businessPassword: '',
     repeatPassword: '',
-    businessName: ''
+    businessOwnaerId: null,
+    businessRegistrationDoc: null,
+    businessClearanceDoc: null,
+    bussCurrentAnnualFinancialStatement: null,
+    businesBankStatement: null,
+    bussReferralesName: '',
+    bussReferralesSurname: '',
+    bussReferralesEmail: '',
+    bussReferralesRecentJob: '',
+    terms: false
   });
+
   const data = {
     name: state.name,
-    surnam: state.surname,
+    surnam: state.businessSurname,
     email: state.email,
-    contactNumber: state.contactNumber,
-    password: state.password,
-    repeatPassword: state.repeatPassword
-
+    businessContactNumber: state.businessContactNumber,
+    businessPassword: state.businessPassword,
   };
 
-  const changehandler = (event, name) => {
-    console.log('event: ', event, 'name: ', name);
+  const changeHandler = (event, name) => {
     setState({
       ...state,
       [name]: event
     });
   };
 
-  const onUpload = () => {
-    console.log('upload press');
-  };
+  const handleChoosePhoto = (imgName) => {
+    const options = {
+      noData: true,
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.uri) {
+        setState({ 
+          ...state,
+          [imgName]: response 
+        })
+      }
+    })
+  }
+
+  const userSignUp = () => {
+    const data = new FormData()
+    data.append('businessName', state.businessName)
+    data.append('businessSurname', state.businessSurname)
+    data.append('businessEmail', state.businessEmail)
+    data.append('businessContactNumber', state.businessContactNumber)
+    data.append('businessPassword', state.businessPassword)
+    data.append('bussReferralesName', state.bussReferralesName)
+    data.append('bussReferralesSurname', state.bussReferralesSurname)
+    data.append('bussReferralesEmail', state.bussReferralesEmail)
+    data.append('bussReferralesRecentJob', state.bussReferralesRecentJob)
+    data.append('terms', state.terms)
+    data.append('businessOwnaerId', {
+      uri: state.businessOwnaerId.uri,
+      type: 'image/jpeg',
+      name: 'businessOwnaerId'
+    });
+    data.append('businessRegistrationDoc', {
+      uri: state.businessRegistrationDoc.uri,
+      type: 'image/jpeg',
+      name: 'businessRegistrationDoc'
+    });
+    data.append('businessClearanceDoc', {
+      uri: state.businessClearanceDoc.uri,
+      type: 'image/jpeg',
+      name: 'businessClearanceDoc'
+    });
+    data.append('bussCurrentAnnualFinancialStatement', {
+      uri: state.bussCurrentAnnualFinancialStatement.uri,
+      type: 'image/jpeg',
+      name: 'bussCurrentAnnualFinancialStatement'
+    });
+    data.append('businesBankStatement', {
+      uri: state.businesBankStatement.uri,
+      type: 'image/jpeg',
+      name: 'businesBankStatement'
+    });
+
+    console.log("eee - ", data)
+    
+    signupService(data)
+      .then(res => {
+        console.log('vinod - 1 - ',res)
+      })
+      .catch(err => {
+        console.log('vinod error -', err)
+      });
+  }
 
   return (
     <>
@@ -75,7 +150,7 @@ export function Registration({ navigation }) {
                 justifyContent: 'center',
                 alignItems: 'center'
               }}
-            >
+              >
               <Image
                 resizeMode="contain"
                 style={{ height: wp('3.5%'), width: wp('3.5%') }}
@@ -86,32 +161,32 @@ export function Registration({ navigation }) {
           <View style={{ padding: 15 }}>
             <TwoInputsWithIcon
               data={[
-                { name: 'name', value: state.name },
-                { name: 'surname', value: state.surnam }
+                { name: 'businessName', value: state.businessName, placeholder: 'Name' },
+                { name: 'businessSurname', value: state.businessSurname, placeholder: 'Surname' }
               ]}
-              onChange={changehandler}
+              onChange={changeHandler}
               iconName="user"
             />
             <InputWithIcon
-              name="email"
+              name="businessEmail"
               placeholder="Email"
               value={state.email}
               iconName="mail"
-              onChange={changehandler}
+              onChange={changeHandler}
             />
             <InputWithIcon
               name="businessName"
               placeholder="Business Name"
               value={state.email}
               iconName="mail"
-              onChange={changehandler}
+              onChange={changeHandler}
             />
             <InputWithIcon
-              name="contactNumber"
+              name="businessContactNumber"
               placeholder="Contact Number"
               value={state.contactNumber}
               iconName="mobile"
-              onChange={changehandler}
+              onChange={changeHandler}
               numeric
             />
             <InputWithIcon
@@ -119,15 +194,15 @@ export function Registration({ navigation }) {
               placeholder="Vehicle Registration Number"
               value={state.vehicleRegistrationNumber}
               iconName="document"
-              onChange={changehandler}
+              onChange={changeHandler}
             />
             <InputWithIcon
-              name="password"
+              name="businessPassword"
               placeholder="Password"
               value={state.password}
               iconName="lock"
               isSecure
-              onChange={changehandler}
+              onChange={changeHandler}
             />
             <InputWithIcon
               name="repeatPassword"
@@ -135,20 +210,24 @@ export function Registration({ navigation }) {
               value={state.repeatPassword}
               iconName="lock"
               isSecure
-              onChange={changehandler}
+              onChange={changeHandler}
             />
             <UploadContainer
+              name="businessOwnaerId"
               heading="Copy of id of business owner and field staff"
               text="Upload ID document"
               format="JPG or PNG"
-              onPress={onUpload}
+              photo={state.businessOwnaerId}
+              onPress={() => handleChoosePhoto('businessOwnaerId')}
             />
 
             <UploadContainer
-              heading="Copy of id of business owner and field staff"
+              name="businessRegistrationDoc"
+              heading="Copy of business registration documents"
               text="Upload ID document"
               format="JPG or PNG"
-              onPress={onUpload}
+              photo={state.businessRegistrationDoc}
+              onPress={() => handleChoosePhoto('businessRegistrationDoc')}
             />
             <View style={{ marginBottom: 15 }}>
               <Text style={{ fontSize: 15, color: 'gray' }}>
@@ -162,23 +241,29 @@ export function Registration({ navigation }) {
               </Text>
             </View>
             <UploadContainer
+            name="businessClearanceDoc"
               heading="Text Clearance Documents"
               text="Upload document"
               format="JPG or PNG"
-              onPress={onUpload}
+              photo={state.businessClearanceDoc}
+              onPress={() => handleChoosePhoto('businessClearanceDoc')}
             />
             <UploadContainer
+              name="bussCurrentAnnualFinancialStatement"
               heading="Latest annual financial statement"
               text="Upload document"
               format="JPG or PNG"
-              onPress={onUpload}
+              photo={state.bussCurrentAnnualFinancialStatement}
+              onPress={() => handleChoosePhoto('bussCurrentAnnualFinancialStatement')}
             />
 
             <UploadContainer
+              name="businesBankStatement"
               heading="Banking letter"
               text="Upload document"
               format="JPG or PNG"
-              onPress={onUpload}
+              photo={state.businesBankStatement}
+              onPress={() => handleChoosePhoto('businesBankStatement')}
             />
             <View style={{ marginBottom: 15 }}>
               <Text style={{ fontSize: 15, color: 'gray' }}>
@@ -202,17 +287,18 @@ export function Registration({ navigation }) {
             </View>
             <TwoInputsWithIcon
               data={[
-                { name: 'name', value: state.name },
-                { name: 'surname', value: state.surnam }
+                { name: 'bussReferralesName', value: state.bussReferralesName, placeholder: 'Name' },
+                { name: 'bussReferralesSurname', value: state.bussReferralesSurname, placeholder: "Surname" }
               ]}
-              onChange={changehandler}
+              onChange={changeHandler}
               iconName="user"
             />
             <InputWithIcon
-              name="email"
-              value={state.email}
+              name="bussReferralesEmail"
+              placeholder="Email"
+              value={state.bussReferralesSurname}
               iconName="mail"
-              onChange={changehandler}
+              onChange={changeHandler}
             />
           </View>
 
@@ -230,12 +316,26 @@ export function Registration({ navigation }) {
               <Text style={styles.referralsHeaderText}>
                 Most recent job carried out
               </Text>
+            <InputWithIcon
+              name="bussReferralesRecentJob"
+              placeholder="Referrales Recent Job"
+              value={state.bussReferralesRecentJob}
+              iconName="mail"
+              onChange={changeHandler}
+              />
+              </View>
+          </View>
+          <View style={{ flexDirection: 'column'}}>
+            <View style={{ flexDirection: 'row' }}>
+              <CheckBox
+                value={state.terms}
+                onValueChange={() => setState({ ...state, terms: !state.terms })}
+              />
+              <Text style={{marginTop: 5}}>I agree with terms & conditions</Text>
             </View>
           </View>
-          <View style={styles.loginBottonContainer}>
-            <RoundButton title="Sign Up" onPress={() => {
-              console.log('etst')
-            }} />
+          <View style={styles.registerBottonContainer}>
+            <RoundButton title="Sign Up" onPress={userSignUp} />
           </View>
         </View>
       </Keboardavoing>
@@ -293,5 +393,9 @@ const styles = StyleSheet.create({
     height: 40,
     borderBottomWidth: 1,
     borderBottomColor: '#dedede'
+  },
+  registerBottonContainer: {
+    flex: 1,
+    justifyContent: 'center'
   }
 });

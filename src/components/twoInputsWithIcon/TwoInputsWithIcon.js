@@ -30,7 +30,7 @@ export function TwoInputsWithIcon(props) {
           return (
             <TextInput
               style={styles.input}
-              placeholder={item.name}
+              placeholder={item.placeholder}
               value={item.value}
               onChangeText={text => props.onChange(text, item.name)}
             />
