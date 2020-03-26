@@ -26,17 +26,17 @@ export function LoginCard(props) {
             <View style={styles.touchableElementsContainer}>
               <View style={styles.inputContainer}>
                 <InputWithIcon
-                  name="email"
+                  name="businessOwnerEmail"
                   placeholder="Email"
-                  value={props.data.email}
+                  value={props.data.businessOwnerEmail}
                   iconName="mail"
                   onChange={props.onChange}
                 />
 
                 <InputWithIcon
-                  name="password"
+                  name="businessPassword"
                   placeholder="Password"
-                  value={props.data.password}
+                  value={props.data.businessPassword}
                   iconName="lock"
                   onChange={props.onChange}
                   isSecure

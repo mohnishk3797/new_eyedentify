@@ -21,30 +21,30 @@ import {
 } from '../../Redux/Actions';
 function Login({ navigation }) {
   const [state, setState] = React.useState({
-    email: '',
-    password: ''
+    businessOwnerEmail: '',
+    businessPassword: ''
   });
   const dispatch = useDispatch();
   const data = {
-    email: state.email,
-    password: state.password
+    businessOwnerEmail: state.businessOwnerEmail,
+    businessPassword: state.businessPassword
   };
 
   const onSignIn = async () => {
     let data = {
-      username: state.email,
-      password: state.password,
-      token: 'abc',
-      deviceId: 'abc1'
+      businessOwnerEmail: state.businessOwnerEmail,
+      businessPassword: state.businessPassword,
     };
 
     loginService(data)
       .then(res => {
+        console.log(data, res)
         dispatch(ProfileDataAction(res.profile_pic));
         dispatch(userDataAction(res.user));
         dispatch(TokenAction(res.token));
       })
       .catch(err => {
+        console.log(err       )
         dispatch(ErrorAction(err));
       });
   };

@@ -5,10 +5,9 @@ export const loginService = data => {
   return new Promise(function(resolve, reject) {
     axios({
       method: 'post',
-      url: `${baseUrl}/login`,
+      url: `${baseUrl}/serviceProvider/login`,
       headers: {
-        Authorization: `Basic ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       data: data,
     })
@@ -37,6 +36,7 @@ export const signupService = data => {
       data: data,
     })
       .then(res => {
+        console.log("RES - ", res)
         if (res.status === 200) {
           resolve(res.data);
         } else {
@@ -44,6 +44,7 @@ export const signupService = data => {
         }
       })
       .catch(err => {
+        console.log("ERR - ", err)
         reject(err.response);
       });
   });

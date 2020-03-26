@@ -31,9 +31,10 @@ import { Keboardavoing } from '../../containers';
 
 export function Registration({ navigation }) {
   const [state, setState] = React.useState({
+    businessOwnerName: '',
+    businessOwnerSurname: '',
+    businessOwnerEmail: '',
     businessName: '',
-    businessSurname: '',
-    businessEmail: '',
     businessContactNumber: '',
     businessPassword: '',
     repeatPassword: '',
@@ -42,20 +43,13 @@ export function Registration({ navigation }) {
     businessClearanceDoc: null,
     bussCurrentAnnualFinancialStatement: null,
     businesBankStatement: null,
+    businessOwnerPic: null,
     bussReferralesName: '',
     bussReferralesSurname: '',
     bussReferralesEmail: '',
     bussReferralesRecentJob: '',
     terms: false
   });
-
-  const data = {
-    name: state.name,
-    surnam: state.businessSurname,
-    email: state.email,
-    businessContactNumber: state.businessContactNumber,
-    businessPassword: state.businessPassword,
-  };
 
   const changeHandler = (event, name) => {
     setState({
@@ -80,9 +74,10 @@ export function Registration({ navigation }) {
 
   const userSignUp = () => {
     const data = new FormData()
+    data.append('businessOwnerName', state.businessOwnerName)
     data.append('businessName', state.businessName)
-    data.append('businessSurname', state.businessSurname)
-    data.append('businessEmail', state.businessEmail)
+    data.append('businessOwnerSurname', state.businessOwnerSurname)
+    data.append('businessOwnerEmail', state.businessOwnerEmail)
     data.append('businessContactNumber', state.businessContactNumber)
     data.append('businessPassword', state.businessPassword)
     data.append('bussReferralesName', state.bussReferralesName)
@@ -133,11 +128,19 @@ export function Registration({ navigation }) {
       <Keboardavoing>
         <View style={styles.cardContainer}>
           <View style={styles.profileImageContainer}>
-            <Image
-              resizeMode="contain"
-              style={styles.profileImg}
-              source={Images.dummyProfile}
-            />
+            
+              {state.businessOwnerPic ? <Image
+                name="businessOwnerPic"
+                resizeMode="contain"
+                style={styles.profileImg}
+                source={{uri: state.businessOwnerPic.uri}}
+                />:
+                <Image
+                name="businessOwnerPic"
+                resizeMode="contain"
+                style={styles.profileImg}
+                source={Images.dummyProfile}
+                />}
             <TouchableOpacity
               style={{
                 backgroundColor: Colors.primaryColor,
@@ -155,20 +158,21 @@ export function Registration({ navigation }) {
                 resizeMode="contain"
                 style={{ height: wp('3.5%'), width: wp('3.5%') }}
                 source={Images.whitePlus}
-              />
+                onPress={() => handleChoosePhoto('businessOwnerPic')}
+                />
             </TouchableOpacity>
           </View>
           <View style={{ padding: 15 }}>
             <TwoInputsWithIcon
               data={[
-                { name: 'businessName', value: state.businessName, placeholder: 'Name' },
-                { name: 'businessSurname', value: state.businessSurname, placeholder: 'Surname' }
+                { name: 'businessOwnerName', value: state.businessOwnerName, placeholder: 'Name' },
+                { name: 'businessOwnerSurname', value: state.businessOwnerSurname, placeholder: 'Surname' }
               ]}
               onChange={changeHandler}
               iconName="user"
             />
             <InputWithIcon
-              name="businessEmail"
+              name="businessOwnerEmail"
               placeholder="Email"
               value={state.email}
               iconName="mail"
@@ -188,13 +192,6 @@ export function Registration({ navigation }) {
               iconName="mobile"
               onChange={changeHandler}
               numeric
-            />
-            <InputWithIcon
-              name="vehicleRegistrationNumber"
-              placeholder="Vehicle Registration Number"
-              value={state.vehicleRegistrationNumber}
-              iconName="document"
-              onChange={changeHandler}
             />
             <InputWithIcon
               name="businessPassword"
