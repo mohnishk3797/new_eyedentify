@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import {View, Text, Image, TouchableOpacity, TextInput} from 'react-native';
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import { styles } from './style';
-import { Images } from '../../util';
-import { InputWithIcon, RoundButton, SocialButtons } from '../../components';
+import {styles} from './style';
+import {Images} from '../../util';
+import {InputWithIcon, RoundButton, SocialButtons} from '../../components';
 
 export function LoginCard(props) {
   return (
@@ -31,6 +31,7 @@ export function LoginCard(props) {
                   value={props.data.businessOwnerEmail}
                   iconName="mail"
                   onChange={props.onChange}
+                  error={props.error}
                 />
 
                 <InputWithIcon
@@ -39,6 +40,7 @@ export function LoginCard(props) {
                   value={props.data.businessPassword}
                   iconName="lock"
                   onChange={props.onChange}
+                  error={props.error}
                   isSecure
                 />
               </View>
