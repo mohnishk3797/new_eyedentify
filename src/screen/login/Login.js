@@ -38,13 +38,13 @@ function Login({ navigation }) {
 
     loginService(data)
       .then(res => {
-        console.log(data, res)
+        // console.log(data, res)
         dispatch(ProfileDataAction(res.profile_pic));
         dispatch(userDataAction(res.user));
         dispatch(TokenAction(res.token));
       })
       .catch(err => {
-        console.log(err       )
+        // console.log("err", err)
         dispatch(ErrorAction(err));
       });
   };

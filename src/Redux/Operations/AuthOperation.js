@@ -7,11 +7,13 @@ export const loginService = data => {
       method: 'post',
       url: `${baseUrl}/serviceProvider/login`,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${token}`,
       },
       data: data,
     })
-      .then(res => {
+    .then(res => {
+      console.log("RES - ", res.data)
         if (res.status === 200) {
           resolve(res.data);
         } else {
@@ -19,6 +21,7 @@ export const loginService = data => {
         }
       })
       .catch(err => {
+        console.log("ERR - ", err)
         reject(err.response);
       });
   });
@@ -36,7 +39,6 @@ export const signupService = data => {
       data: data,
     })
       .then(res => {
-        console.log("RES - ", res)
         if (res.status === 200) {
           resolve(res.data);
         } else {
@@ -44,7 +46,6 @@ export const signupService = data => {
         }
       })
       .catch(err => {
-        console.log("ERR - ", err)
         reject(err.response);
       });
   });

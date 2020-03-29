@@ -8,7 +8,6 @@ export function Jobs({ navigation }) {
 
   const tokenHandler = async () => {
     let token = await AsyncStorage.getItem('userToken');
-    console.log('token:', token);
   };
   tokenHandler();
 

@@ -123,7 +123,6 @@ export function Navigation() {
 
   React.useEffect(() => {
     const bootstrapAsync = async () => {
-      console.log('************************************', token);
     };
 
     bootstrapAsync();
