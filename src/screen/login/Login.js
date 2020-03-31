@@ -38,13 +38,15 @@ function Login({ navigation }) {
 
     loginService(data)
       .then(res => {
-        // console.log(data, res)
-        dispatch(ProfileDataAction(res.profile_pic));
-        dispatch(userDataAction(res.user));
-        dispatch(TokenAction(res.token));
+        console.log("data>>>>>>>>>>>>>>>>>>>> ", res.data)
+        if(res.status === "Login successfully"){
+          // dispatch(ProfileDataAction(res.profile_pic));
+          dispatch(userDataAction(res.data));
+          // dispatch(TokenAction(res.token));
+        }
       })
       .catch(err => {
-        // console.log("err", err)
+        console.log("err _--------------->> ", err)
         dispatch(ErrorAction(err));
       });
   };
