@@ -13,17 +13,16 @@ export const loginService = data => {
       data: data,
     })
     .then(res => {
-      console.log("RES - ", res.data)
-        if (res.status === 200) {
-          resolve(res.data);
-        } else {
-          reject(res);
-        }
-      })
-      .catch(err => {
-        console.log("ERR - ", err)
-        reject(err.response);
-      });
+      if (res.status === 200) {
+        resolve(res.data);
+      } else {
+        reject(res);
+      }
+    })
+    .catch(err => {
+      console.log("ERR - ", err)
+      reject(err.response);
+    });
   });
 };
 

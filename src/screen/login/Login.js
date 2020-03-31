@@ -38,10 +38,11 @@ function Login({ navigation }) {
 
     loginService(data)
       .then(res => {
-        console.log("data>>>>>>>>>>>>>>>>>>>> ", res.data)
         if(res.status === "Login successfully"){
           // dispatch(ProfileDataAction(res.profile_pic));
           dispatch(userDataAction(res.data));
+          // navigation.navigate('Home')
+          // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ",navigation.navigate)
           // dispatch(TokenAction(res.token));
         }
       })

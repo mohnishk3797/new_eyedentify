@@ -24,6 +24,8 @@ const AuthReducer = (state = initialState, action) => {
     case types.USERDATA:
       return Object.assign({}, state, {
         userData: action.payload,
+        loggedInStatus: true,
+        error: null,
       });
     case types.REGISTER:
       return Object.assign({}, state, {
